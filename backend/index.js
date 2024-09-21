@@ -38,5 +38,5 @@ app.use("/api/v1/application",applicationRoute);
  /*
  git add .
  git commit -m " "
- push origin backend
+ git push origin backend
  */
