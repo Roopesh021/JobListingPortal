@@ -50,8 +50,8 @@ const AdminJobsTable = () => {
         <TableBody>
           {allAdminJobs.length <= 0 ? (
             <tr>
-              <td colSpan="4" style={{ textAlign: "center" }}>
-                You haven't registered any company yet.
+              <td className="p-row" colSpan="4" style={{ textAlign: "center" }}>
+                You haven't posted a Job
               </td>
             </tr>
           ) : (

@@ -1,16 +1,33 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import PostCard from "./PostCard";
 import { PostListContext } from "../Store/post-list-store";
 import { UserContext } from "@/Store/user-store";
 const PostList = () => {
-  const { allJobs } = useContext(UserContext);
+  const { allJobs, searchedQuery } = useContext(UserContext);
+
+  const [filterJobs, setFilterJobs] = useState(allJobs);
+
+  useEffect(() => {
+    if (searchedQuery) {
+      const filteredJobs = allJobs.filter((job) => {
+        return (
+          job.title.toLowerCase().includes(searchedQuery.toLowerCase()) ||
+          job.description.toLowerCase().includes(searchedQuery.toLowerCase()) ||
+          job.location.toLowerCase().includes(searchedQuery.toLowerCase())
+        );
+      });
+      setFilterJobs(filteredJobs);
+    } else {
+      setFilterJobs(allJobs);
+    }
+  }, [allJobs, searchedQuery]);
   return (
     <>
       <div className="post-list-container">
-        {allJobs.length <= 0 ? (
+        {filterJobs.length <= 0 ? (
           <span>Job Not Found</span>
         ) : (
-          allJobs.map((item, index) => (
+          filterJobs.map((item, index) => (
             <PostCard key={index} item={item}></PostCard>
           ))
         )}

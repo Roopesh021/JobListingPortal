@@ -1,10 +1,12 @@
 import axios from "axios";
 import "./SignUp.css";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { USER_API_END_POINT } from "@/utils/constant";
 import { toast } from "sonner";
+import { UserContext } from "@/Store/user-store";
 const SignUp = () => {
+  const { user } = useContext(UserContext);
   const [input, setInput] = useState({
     fullname: "",
     email: "",
@@ -34,6 +36,7 @@ const SignUp = () => {
     if (input.file) {
       formData.append("file", input.file);
     }
+    console.log(formData);
     try {
       const res = await axios.post(`${USER_API_END_POINT}/register`, formData, {
         headers: {
@@ -50,6 +53,11 @@ const SignUp = () => {
       toast.error(error.response.data.message);
     }
   };
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  }, []);
   return (
     <>
       <div className="signup-section">
@@ -116,7 +124,7 @@ const SignUp = () => {
             <label htmlFor="recruiter">Recruiter</label>
           </div>
           <div className="f-label">
-            <label>Phone Number</label>
+            <label>Profile Photo</label>
             <input
               accept="image/*"
               type="file"

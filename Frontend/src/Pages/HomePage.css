@@ -395,6 +395,12 @@
   margin-bottom: 18px;
 }
 
+.l-row-third h4 {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
 .flex-badge {
   display: flex;
   flex-wrap: wrap;

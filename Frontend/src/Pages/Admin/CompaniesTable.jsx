@@ -37,7 +37,7 @@ const CompaniesTable = () => {
   return (
     <>
       <Table>
-        <TableCaption>List of your recent registered companies</TableCaption>
+        {/* <TableCaption>List of your recent registered companies</TableCaption> */}
         <TableHeader>
           <TableRow>
             <TableHead>Logo</TableHead>
@@ -49,7 +49,7 @@ const CompaniesTable = () => {
         <TableBody>
           {companies.length <= 0 ? (
             <tr>
-              <td colSpan="4" style={{ textAlign: "center" }}>
+              <td className="p-row" colSpan="4" style={{ textAlign: "center" }}>
                 You haven't registered any company yet.
               </td>
             </tr>

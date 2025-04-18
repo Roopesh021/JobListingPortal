@@ -83,3 +83,9 @@
   padding: 40px;
   box-shadow: 0 15px 45px rgba(21, 31, 71, 0.1);
 }
+
+.p-row {
+  padding: 20px;
+  font-size: 18px;
+  font-weight: 600;
+}

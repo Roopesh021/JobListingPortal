@@ -25,16 +25,18 @@ const PostCard = ({ item }) => {
           <h3>{item.company.name}</h3>
         </div>
         <div className="second-row m-bottom">
-          <h4 className="currency">
-            <MdOutlineWorkHistory className="f-size" />
+          <h4 className="currency f-size">
+            <MdOutlineWorkHistory className="" />
             {item.experienceLevel}
+            <span>Yrs</span>
           </h4>
-          <h4 className="currency">
-            <MdCurrencyRupee className="f-size" />
+          <h4 className="currency f-size">
+            <MdCurrencyRupee className="" />
             {item.salary}
+            <span>Lakhs</span>
           </h4>
-          <h4 className="currency">
-            <GrLocation className="f-size" />
+          <h4 className="currency f-size">
+            <GrLocation className="" />
             {item.location}
           </h4>
         </div>

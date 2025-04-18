@@ -10,10 +10,10 @@ import { Button } from "./ui/button";
 import { FaRegUser } from "react-icons/fa";
 import { LuLogOut } from "react-icons/lu";
 import { useContext } from "react";
-import { UserContext } from "@/Store/user-store";
 import { toast } from "sonner";
 import axios from "axios";
 import { USER_API_END_POINT } from "@/utils/constant";
+import { UserContext } from "../Store/user-store";
 const Header = () => {
   const { userHandler } = useContext(UserContext);
   const { user } = useContext(UserContext);
@@ -40,7 +40,7 @@ const Header = () => {
           <div className="logo-head">
             <Link to="/" className="link-css-reset">
               <h2>
-                Project <span className="logo">Logo</span>
+                Jobs <span className="logo">Heaven</span>
               </h2>
             </Link>
           </div>
@@ -59,11 +59,18 @@ const Header = () => {
                 </li>
               </>
             ) : (
-              <li className="nav-item">
-                <Link to="/jobs" className="link-css-reset">
-                  Jobs
-                </Link>
-              </li>
+              <>
+                <li className="nav-item">
+                  <Link to="/" className="link-css-reset">
+                    Home
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link to="/jobs" className="link-css-reset">
+                    Jobs
+                  </Link>
+                </li>
+              </>
             )}
 
             <li className="nav-item">
@@ -74,7 +81,7 @@ const Header = () => {
               ) : (
                 <Popover>
                   <PopoverTrigger>
-                    <Avatar className="">
+                    <Avatar className="h-14 w-14">
                       <AvatarImage
                         src={user?.profile?.profilePhoto}
                         alt="@shadcn"

@@ -1,6 +1,8 @@
+import { Label } from "@/Components/ui/label";
+import { RadioGroupItem } from "@/Components/ui/radio-group";
 import "./Filter.css";
 import { IoMdArrowDropdown } from "react-icons/io";
-const Filter = ({ data }) => {
+const Filter = ({ data, index }) => {
   return (
     <>
       <div className="filter-container">
@@ -8,11 +10,12 @@ const Filter = ({ data }) => {
         <IoMdArrowDropdown />
       </div>
       <div className="filter-options">
-        {data.array.map((item) => {
+        {data.array.map((item, idx) => {
+          const itemId = `id${index} - ${idx}`;
           return (
             <div className="filter-option">
-              <input type="radio" name="filter" value={item} />
-              <label htmlFor="student">{item}</label>
+              <RadioGroupItem type="radio" value={item} id={itemId} />
+              <Label htmlFor={itemId}>{item}</Label>
             </div>
           );
         })}

@@ -22,6 +22,7 @@
   display: flex;
   gap: 8px;
   margin: 0px 20px;
+  margin-bottom: 20px;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   color: #000;
 }

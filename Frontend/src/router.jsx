@@ -14,6 +14,7 @@ import Jobs from "./Pages/Admin/Jobs";
 import PostJob from "./Pages/Admin/PostJob";
 import Applicants from "./Pages/Admin/Applicants";
 import JobDescription from "./Components/JobDescription";
+import ProtectRoute from "./Pages/Admin/ProtectRoute";
 
 function AppRouter() {
   return (

@@ -8,12 +8,14 @@
 }
 
 .first-row h2 {
-  font-weight: 400;
-  margin-bottom: 15px;
+  font-size: 26px;
+  font-weight: 600;
+  margin-bottom: 9px;
 }
 
 .first-row h3 {
-  font-weight: 200;
+  font-size: 17px;
+  font-weight: 500;
 }
 
 .second-row {
@@ -24,14 +26,15 @@
 
 .second-row h4 {
   border-right: 1px solid gray;
-  padding-right: 4px;
+  height: 18px;
+  padding-right: 11px;
 }
 
-.third-row {
-  height: 21px;
-  overflow: hidden;
-}
 .third-row h4 {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 17px;
   font-weight: 100;
 }
 .fifth-row h4 {
@@ -49,5 +52,5 @@
   gap: 5px;
 }
 .f-size {
-  font-size: 20px;
+  font-size: 16px;
 }

@@ -27,8 +27,13 @@ const UserDetailsProvider = ({ children }) => {
   useEffect(() => {
     if (user === null) {
       localStorage.removeItem("user");
+      setAllJobs([]);
       localStorage.removeItem("allJobs");
       localStorage.removeItem("singleJob");
+      setCompanies([]);
+      localStorage.removeItem("companies");
+      setAllAdminJobs([]);
+      localStorage.removeItem("allAdminJobs");
       localStorage.removeItem("applicants");
       localStorage.removeItem("allAppliedJobs");
     }
@@ -41,85 +46,74 @@ const UserDetailsProvider = ({ children }) => {
     console.log("User updated:", data);
   };
 
-  //Fetch Company By Id
-  // const [singleCompany, setSingleCompany] = useState(null);
-
-  // const useGetCompanyById = (companyId) => {
-  //   useEffect(() => {
-  //     const fetchSingleCompany = async () => {
-  //       try {
-  //         const res = await axios.get(
-  //           `${COMPANY_API_END_POINT}/get/${companyId}`,
-  //           {
-  //             withCredentials: true,
-  //           }
-  //         );
-  //         console.log(res.data.company);
-  //         if (res.data.success) {
-  //           setSingleCompany(res.data.company);
-  //         }
-  //       } catch (error) {
-  //         console.log(error);
-  //       }
-  //     };
-  //     fetchSingleCompany();
-  //   }, [companyId, setSingleCompany]);
-  // };
-
   //Getting all companies
 
-  const [companies, setCompanies] = useState([]);
+  const [companies, setCompanies] = useState(() => {
+    const savedCompanies = localStorage.getItem("companies");
+    return savedCompanies ? JSON.parse(savedCompanies) : [];
+  });
+
+  // const [companies, setCompanies] = useState([]);
 
   const useGetAllCompanies = () => {
     useEffect(() => {
-      const fetchCompanies = async () => {
-        try {
-          const res = await axios.get(`${COMPANY_API_END_POINT}/get`, {
-            withCredentials: true,
-          });
-          if (res.data.success) {
-            setCompanies(res.data.companies);
+      if (companies.length === 0) {
+        const fetchCompanies = async () => {
+          try {
+            const res = await axios.get(`${COMPANY_API_END_POINT}/get`, {
+              withCredentials: true,
+            });
+            if (res.data.success) {
+              setCompanies(res.data.companies);
+            }
+          } catch (error) {
+            console.log(error);
           }
-        } catch (error) {
-          console.log(error);
-        }
-      };
-      fetchCompanies();
-    }, []);
-  };
-  // Dependency array includes companies
+        };
+        fetchCompanies();
+      }
+    }, [companies]);
 
-  // Persist companies to localStorage whenever the state updates
-  //   useEffect(() => {
-  //     if (companies.length > 0) {
-  //       localStorage.setItem("companies", JSON.stringify(companies));
-  //     }
-  //   }, [companies]);
-  // };
+    useEffect(() => {
+      if (companies.length > 0) {
+        localStorage.setItem("companies", JSON.stringify(companies));
+      }
+    }, [companies]);
+  };
 
   // Searching Companies
   const [searchCompanyByText, setSearchCompanyByText] = useState("");
 
-  // Get AdminJobs
-
-  const [allAdminJobs, setAllAdminJobs] = useState([]);
+  // Get Admin Jobs
+  const [allAdminJobs, setAllAdminJobs] = useState(() => {
+    const savedAdminJobs = localStorage.getItem("allAdminJobs");
+    return savedAdminJobs ? JSON.parse(savedAdminJobs) : [];
+  });
 
   const useGetAllAdminJobs = () => {
     useEffect(() => {
-      const fetchAllAdminJobs = async () => {
-        try {
-          const res = await axios.get(`${JOB_API_END_POINT}/getadminjobs`, {
-            withCredentials: true,
-          });
-          if (res.data.success) {
-            setAllAdminJobs(res.data.jobs);
+      if (allAdminJobs.length === 0) {
+        const fetchAllAdminJobs = async () => {
+          try {
+            const res = await axios.get(`${JOB_API_END_POINT}/getadminjobs`, {
+              withCredentials: true,
+            });
+            if (res.data.success) {
+              setAllAdminJobs(res.data.jobs);
+            }
+          } catch (error) {
+            console.log(error);
           }
-        } catch (error) {
-          console.log(error);
-        }
-      };
-      fetchAllAdminJobs();
-    }, []);
+        };
+        fetchAllAdminJobs();
+      }
+    }, [allAdminJobs]);
+
+    useEffect(() => {
+      if (allAdminJobs.length > 0) {
+        localStorage.setItem("allAdminJobs", JSON.stringify(allAdminJobs));
+      }
+    }, [allAdminJobs]);
   };
 
   // Searching AdminJobs
@@ -162,26 +156,6 @@ const UserDetailsProvider = ({ children }) => {
     }, [allJobs]);
   };
 
-  // const [allJobs, setAllJobs] = useState([]);
-
-  // const useGetAllJobs = () => {
-  //   useEffect(() => {
-  //     const fetchAllJobs = async () => {
-  //       try {
-  //         const res = await axios.get(`${JOB_API_END_POINT}/get`, {
-  //           withCredentials: true,
-  //         });
-  //         if (res.data.success) {
-  //           setAllJobs(res.data.jobs);
-  //         }
-  //       } catch (error) {
-  //         console.log(error);
-  //       }
-  //     };
-  //     fetchAllJobs();
-  //   }, []);
-  // };
-
   //Getting Single Job By Id
 
   const [singleJob, setSingleJob] = useState(() => {
@@ -193,31 +167,47 @@ const UserDetailsProvider = ({ children }) => {
       localStorage.setItem("singleJob", JSON.stringify(singleJob));
     }
   }, [singleJob]);
-  // const [singleJob, setSingleJob] = useState(null);
 
   // Applicants
 
   const [applicants, setApplicants] = useState([]);
 
-  //Getting applied jobs
+  // Getting AllAppliedJobs
 
-  const [allAppliedJobs, setAllAppliedJobs] = useState([]);
+  const [allAppliedJobs, setAllAppliedJobs] = useState(() => {
+    const savedAppliedJobs = localStorage.getItem("allAppliedJobs");
+    return savedAppliedJobs ? JSON.parse(savedAppliedJobs) : [];
+  });
 
   const useGetAppliedJobs = () => {
     useEffect(() => {
-      const fetchAppliedJobs = async () => {
-        try {
-          const res = await axios.get(`${APPLICATION_API_END_POINT}/get`, {
-            withCredentials: true,
-          });
-          if (res.data.success) {
-            setAllAppliedJobs(res.data.application);
+      if (allAppliedJobs.length === 0) {
+        const fetchAppliedJobs = async () => {
+          try {
+            const res = await axios.get(`${APPLICATION_API_END_POINT}/get`, {
+              withCredentials: true,
+            });
+            if (res.data.success) {
+              setAllAppliedJobs(res.data.application);
+            }
+          } catch (error) {
+            console.log(error);
           }
-        } catch (error) {}
-      };
-      fetchAppliedJobs();
-    }, []);
+        };
+        fetchAppliedJobs();
+      }
+    }, [allAppliedJobs]);
+
+    useEffect(() => {
+      if (allAppliedJobs.length > 0) {
+        localStorage.setItem("allAppliedJobs", JSON.stringify(allAppliedJobs));
+      }
+    }, [allAppliedJobs]);
   };
+
+  // Filter Logic
+
+  const [searchedQuery, setSearchedQuery] = useState();
 
   // Provide user data and handler to the children
   return (
@@ -241,6 +231,8 @@ const UserDetailsProvider = ({ children }) => {
         setApplicants,
         allAppliedJobs,
         useGetAppliedJobs,
+        searchedQuery,
+        setSearchedQuery,
       }}
     >
       {children}
